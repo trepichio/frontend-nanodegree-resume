@@ -151,8 +151,18 @@ var education = {
 if (bio.skills.length > 0) {
 	$("#header").append(HTMLskillsStart);
 	for (skill in bio.skills) {
-		formattedSkills = HTMLskills.replace("%data%",bio.skills[skill]);
+		var formattedSkills = HTMLskills.replace("%data%",bio.skills[skill]);
 		$("#skills").append(formattedSkills);
 	}
 }
 
+if (work.jobs.length > 0) {
+	
+	for (job in work.jobs) {
+		$("#workExperience").append(HTMLworkStart);
+		var formattedEmployer = HTMLworkEmployer.replace("%data%",work.jobs[job].employer);
+		var formattedTitle = HTMLworkTitle.replace("%data%",work.jobs[job].title);
+		var formattedEmployerTitle = formattedEmployer + formattedTitle;
+		$(".work-entry:last").append(formattedEmployerTitle);
+	}
+}
