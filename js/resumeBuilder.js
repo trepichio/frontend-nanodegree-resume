@@ -159,8 +159,8 @@ var formattedLocation = HTMLlocation.replace("%data%",bio.contacts.location);
 var bioEntry = formattedName + formattedRole;
 var bioContacts = formattedEmail + formattedMobile + formattedGitHub +
 formattedLocation;
-$("#header").append(bioEntry);
-$("#header").append(bioContacts);
+$("#header").prepend(bioEntry);
+$("#topContacts").append(bioContacts);
 $("#header").append(formattedBioPic + formattedWelcomeMsg)
 
 
@@ -173,17 +173,20 @@ if (bio.skills.length > 0) {
 	}
 }
 
-if (work.jobs.length > 0) {
-	
-	for (job in work.jobs) {
-		$("#workExperience").append(HTMLworkStart);
-		var formattedEmployer = HTMLworkEmployer.replace("%data%",work.jobs[job].employer);
-		var formattedTitle = HTMLworkTitle.replace("%data%",work.jobs[job].title);
-		var formattedLocation = HTMLworkLocation.replace("%data%",work.jobs[job].location);
-		var formattedDates = HTMLworkDates.replace("%data%",work.jobs[job].dates);
-		var jobDescription = work.jobs[job].description.join('');
-		var formattedDescription = HTMLworkDescription.replace("%data%",jobDescription);
-		var formattedWorkEntry = formattedEmployer + formattedTitle + formattedLocation + formattedDates + formattedDescription;
-		$(".work-entry:last").append(formattedWorkEntry);
+function displayWork(){
+	if (work.jobs.length > 0) {
+		for (job in work.jobs) {
+			$("#workExperience").append(HTMLworkStart);
+			var formattedEmployer = HTMLworkEmployer.replace("%data%",work.jobs[job].employer);
+			var formattedTitle = HTMLworkTitle.replace("%data%",work.jobs[job].title);
+			var formattedLocation = HTMLworkLocation.replace("%data%",work.jobs[job].location);
+			var formattedDates = HTMLworkDates.replace("%data%",work.jobs[job].dates);
+			var jobDescription = work.jobs[job].description.join('');
+			var formattedDescription = HTMLworkDescription.replace("%data%",jobDescription);
+			var formattedWorkEntry = formattedEmployer + formattedTitle + formattedLocation + formattedDates + formattedDescription;
+			$(".work-entry:last").append(formattedWorkEntry);
+		}
 	}
 }
+
+displayWork();
