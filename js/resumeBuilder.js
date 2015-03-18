@@ -148,6 +148,23 @@ var education = {
     ]
 };
 
+var formattedName = HTMLheaderName.replace("%data%",bio.name);
+var formattedRole = HTMLheaderRole.replace("%data%",bio.role);
+var formattedBioPic = HTMLbioPic.replace("%data%",bio.pictureURL);
+var formattedWelcomeMsg = HTMLwelcomeMsg.replace("%data%",bio.welcomeMessage);
+var formattedMobile = HTMLmobile.replace("%data%",bio.contacts.mobile);
+var formattedEmail = HTMLemail.replace("%data%",bio.contacts.email);
+var formattedGitHub = HTMLgithub.replace("%data%",bio.contacts.gitHub);
+var formattedLocation = HTMLlocation.replace("%data%",bio.contacts.location);
+var bioEntry = formattedName + formattedRole;
+var bioContacts = formattedEmail + formattedMobile + formattedGitHub +
+formattedLocation;
+$("#header").append(bioEntry);
+$("#header").append(bioContacts);
+$("#header").append(formattedBioPic + formattedWelcomeMsg)
+
+
+
 if (bio.skills.length > 0) {
 	$("#header").append(HTMLskillsStart);
 	for (skill in bio.skills) {
