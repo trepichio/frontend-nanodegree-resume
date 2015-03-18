@@ -147,3 +147,12 @@ var education = {
         }
     ]
 };
+
+if (bio.skills.length > 0) {
+	$("#header").append(HTMLskillsStart);
+	for (skill in bio.skills) {
+		formattedSkills = HTMLskills.replace("%data%",bio.skills[skill]);
+		$("#skills").append(formattedSkills);
+	}
+}
+
