@@ -48,6 +48,19 @@ h2, h3, h4, h5 {
   padding-right: 5%;
 }
 
+button {
+  padding: 10px;
+  background: blue;
+  color: #ffffff;
+  border: 1px;
+  border-radius: 10px;
+  font-family: monospace;
+  
+}
+
+button:hover {
+  background: orange; 
+}
 
 .date-text {
   font-style: italic;
