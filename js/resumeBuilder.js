@@ -182,10 +182,6 @@ var education = {
                 "Chemestry",
                 "Physics"
             ],
-            "minors": [
-                "History",
-                "Geography"
-            ],
             "dates": "1999-2002"
         }
     ],
@@ -202,7 +198,36 @@ var education = {
             "dates": "March 2015",
             "url": "https://www.udacity.com/course/ud775"
         }
-    ]
+    ],
+    "display" : function () {
+		if (education.schools.length > 0) {
+			for (school in education.schools) {
+				$("#education").append(HTMLschoolStart);
+				var formattedName = HTMLschoolName.replace("%data%",education.schools[school].name);
+				var formattedLocation = HTMLschoolLocation.replace("%data%",education.schools[school].location);
+				var formattedDegree = HTMLschoolDegree.replace("%data%",education.schools[school].degree);
+				var formattedDates = HTMLschoolDates.replace("%data%",education.schools[school].dates);
+				var formattedMajors = "";
+				if (education.schools[school].majors.length > 0){
+					formattedMajors = education.schools[school].majors.join(', ');
+					formattedMajors = HTMLschoolMajor.replace("%data%",formattedMajors);
+				}
+				var formattedEducationEntry = formattedName + formattedDegree + formattedDates + formattedLocation + formattedMajors;
+				$(".education-entry:last").append(formattedEducationEntry);
+			}
+		}
+		if (education.onlineCourses.length > 0){
+			$(".education-entry:last").append(HTMLonlineClasses);
+			for (course in education.onlineCourses) {
+				var formattedOnlineTitle = HTMLonlineTitle.replace("%data%",education.onlineCourses[course].title);
+				var formattedOnlineSchool = HTMLonlineSchool.replace("%data%",education.onlineCourses[course].school);
+				var formattedOnlineDates = HTMLonlineDates.replace("%data%",education.onlineCourses[course].dates);
+				var formattedOnlineURL = HTMLonlineURL.replace("%data%",education.onlineCourses[course].url);
+				var formattedOnlineEntry = formattedOnlineTitle + formattedOnlineSchool + formattedOnlineDates + formattedOnlineURL;
+				$(".education-entry:last").append(formattedOnlineEntry);
+			}
+		}
+	}
 };
 
 
