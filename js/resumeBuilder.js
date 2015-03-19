@@ -44,7 +44,22 @@ var work = {
                 " SUD Chemie, KPMG, etc."
             ]
         }
-    ]
+    ],
+    "display" : function(){
+		if (work.jobs.length > 0) {
+			for (job in work.jobs) {
+				$("#workExperience").append(HTMLworkStart);
+				var formattedEmployer = HTMLworkEmployer.replace("%data%",work.jobs[job].employer);
+				var formattedTitle = HTMLworkTitle.replace("%data%",work.jobs[job].title);
+				var formattedLocation = HTMLworkLocation.replace("%data%",work.jobs[job].location);
+				var formattedDates = HTMLworkDates.replace("%data%",work.jobs[job].dates);
+				var jobDescription = work.jobs[job].description.join('');
+				var formattedDescription = HTMLworkDescription.replace("%data%",jobDescription);
+				var formattedWorkEntry = formattedEmployer + formattedTitle + formattedLocation + formattedDates + formattedDescription;
+				$(".work-entry:last").append(formattedWorkEntry);
+			}
+		}
+    }
 };
 
 var projects = {
@@ -57,8 +72,8 @@ var projects = {
                 "Udacity course 'Javascript Basics'"
             ],
             "images": [
-                "http://placekitten.com/g/50/50",
-                "http://placekitten.com/g/50/50"
+                "http://placekitten.com/g/150/300",
+                "http://placekitten.com/g/140/200"
             ]
         },
         {
@@ -77,7 +92,26 @@ var projects = {
                 "http://placekitten.com/g/200/300"
             ]
         }
-    ]
+    ],
+    "display" : function(){
+    	if (projects.project.length > 0) {
+			for (i in projects.project) {
+				$("#projects").append(HTMLprojectStart);
+				var formattedProjectTitle = HTMLprojectTitle.replace("%data%",projects.project[i].title);
+				var formattedProjectDates = HTMLprojectDates.replace("%data%",projects.project[i].dates);
+				var projectDescription = projects.project[i].description;
+				var formattedProjectDescription = HTMLprojectDescription.replace("%data%",projectDescription.join(''));
+				var formattedProjectImage = "";
+				if (projects.project[i].images.length > 0){
+					for (j in projects.project[i].images) {
+						formattedProjectImage += HTMLprojectImage.replace("%data%",projects.project[i].images[j]);
+					}
+				}
+				var formattedProjectEntry = formattedProjectTitle + formattedProjectDates + formattedProjectDescription + formattedProjectImage;
+				$(".project-entry:last").append(formattedProjectEntry);
+			}
+		}
+    }
 };
 
 var bio = {
@@ -97,7 +131,30 @@ var bio = {
         "jQuery",
         "CSS",
         "HTML"
-    ]
+    ],
+    "display" : function () {
+    	var formattedName = HTMLheaderName.replace("%data%",bio.name);
+		var formattedRole = HTMLheaderRole.replace("%data%",bio.role);
+		var formattedBioPic = HTMLbioPic.replace("%data%",bio.pictureURL);
+		var formattedWelcomeMsg = HTMLwelcomeMsg.replace("%data%",bio.welcomeMessage);
+		var formattedMobile = HTMLmobile.replace("%data%",bio.contacts.mobile);
+		var formattedEmail = HTMLemail.replace("%data%",bio.contacts.email);
+		var formattedGitHub = HTMLgithub.replace("%data%",bio.contacts.gitHub);
+		var formattedLocation = HTMLlocation.replace("%data%",bio.contacts.location);
+		var bioEntry = formattedName + formattedRole;
+		var bioContacts = formattedEmail + formattedMobile + formattedGitHub +
+		formattedLocation;
+		$("#header").prepend(bioEntry);
+		$("#topContacts").append(bioContacts);
+		$("#header").append(formattedBioPic + formattedWelcomeMsg);
+		if (bio.skills.length > 0) {
+			$("#header").append(HTMLskillsStart);
+			for (skill in bio.skills) {
+				var formattedSkills = HTMLskills.replace("%data%",bio.skills[skill]);
+				$("#skills").append(formattedSkills);
+			}
+		}
+	}
 };
 
 var education = {
@@ -148,54 +205,18 @@ var education = {
     ]
 };
 
-var formattedName = HTMLheaderName.replace("%data%",bio.name);
-var formattedRole = HTMLheaderRole.replace("%data%",bio.role);
-var formattedBioPic = HTMLbioPic.replace("%data%",bio.pictureURL);
-var formattedWelcomeMsg = HTMLwelcomeMsg.replace("%data%",bio.welcomeMessage);
-var formattedMobile = HTMLmobile.replace("%data%",bio.contacts.mobile);
-var formattedEmail = HTMLemail.replace("%data%",bio.contacts.email);
-var formattedGitHub = HTMLgithub.replace("%data%",bio.contacts.gitHub);
-var formattedLocation = HTMLlocation.replace("%data%",bio.contacts.location);
-var bioEntry = formattedName + formattedRole;
-var bioContacts = formattedEmail + formattedMobile + formattedGitHub +
-formattedLocation;
-$("#header").prepend(bioEntry);
-$("#topContacts").append(bioContacts);
-$("#header").append(formattedBioPic + formattedWelcomeMsg)
 
+$("#main").append(internationalizeButton);
 
-
-if (bio.skills.length > 0) {
-	$("#header").append(HTMLskillsStart);
-	for (skill in bio.skills) {
-		var formattedSkills = HTMLskills.replace("%data%",bio.skills[skill]);
-		$("#skills").append(formattedSkills);
-	}
-}
-
-function displayWork(){
-	if (work.jobs.length > 0) {
-		for (job in work.jobs) {
-			$("#workExperience").append(HTMLworkStart);
-			var formattedEmployer = HTMLworkEmployer.replace("%data%",work.jobs[job].employer);
-			var formattedTitle = HTMLworkTitle.replace("%data%",work.jobs[job].title);
-			var formattedLocation = HTMLworkLocation.replace("%data%",work.jobs[job].location);
-			var formattedDates = HTMLworkDates.replace("%data%",work.jobs[job].dates);
-			var jobDescription = work.jobs[job].description.join('');
-			var formattedDescription = HTMLworkDescription.replace("%data%",jobDescription);
-			var formattedWorkEntry = formattedEmployer + formattedTitle + formattedLocation + formattedDates + formattedDescription;
-			$(".work-entry:last").append(formattedWorkEntry);
-		}
-	}
-}
-
-displayWork();
+bio.display();
+work.display();
+projects.display();
 
 
 function inName(){
 	var finalName = bio.name;
     // Your code goes here!
-    var fn = finalName.toLowerCase().split(' ');
+    var fn = finalName.trim().toLowerCase().split(' ');
 
     finalName = fn[0].charAt(0).toUpperCase() + fn[0].slice(1) + ' ' + fn[fn.length-1].toUpperCase();
 
@@ -204,4 +225,4 @@ function inName(){
     return finalName;
 }
 
-$("#main").append(internationalizeButton);
+
