@@ -133,6 +133,8 @@ function initializeMap() {
       style: google.maps.MapTypeControlStyle.DEFAULT,
       mapTypeIds: [
         google.maps.MapTypeId.ROADMAP,
+        google.maps.MapTypeId.HYBRID,
+        google.maps.MapTypeId.SATELLITE,
         google.maps.MapTypeId.TERRAIN
       ]
     },
@@ -201,14 +203,40 @@ function initializeMap() {
     var infoWindow = new google.maps.InfoWindow({
       content: name
     });
+    var chooseMapTypeIds = [
+        google.maps.MapTypeId.ROADMAP,
+        google.maps.MapTypeId.HYBRID,
+        google.maps.MapTypeId.SATELLITE,
+        google.maps.MapTypeId.TERRAIN
+      ];
 
+    function mapOption(){
+        map.setMapTypeId(chooseMapTypeIds[i]);
+        i++;
+        if (i > 3){
+          i = 0;
+        }
+    }
+    var i = 0;
     // hmmmm, I wonder what this is about...
     google.maps.event.addListener(marker, 'click', function() {
       // your code goes here!
       infoWindow.setContent(name);
       infoWindow.open(map, this);
-
-
+      switch (i){
+        case 0:
+              mapOption();
+              break;
+        case 1:
+              mapOption();
+              break;
+        case 2:
+              mapOption();
+              break;
+        case 3:
+              mapOption();
+              break;
+      }
     });
 
     // this is where the pin actually gets added to the map.
