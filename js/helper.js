@@ -98,6 +98,24 @@ This is the fun part. Here's where we generate the custom Google Map for the web
 See the documentation below for more details.
 https://developers.google.com/maps/documentation/javascript/reference
 */
+
+/** @constructor */
+function CoordMapType(tileSize) {
+  this.tileSize = tileSize;
+}
+
+CoordMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
+  var div = ownerDocument.createElement('div');
+  div.innerHTML = coord;
+  div.style.width = this.tileSize.width + 'px';
+  div.style.height = this.tileSize.height + 'px';
+  div.style.fontSize = '10';
+  div.style.borderStyle = 'solid';
+  div.style.borderWidth = '1px';
+  div.style.borderColor = '#AAAAAA';
+  return div;
+};
+
 var map;    // declares a global map variable
 
 
@@ -109,13 +127,26 @@ function initializeMap() {
   var locations;
 
   var mapOptions = {
-    disableDefaultUI: true
+    disableDefaultUI: true,
+    mapTypeControl: true,
+    mapTypeControlOptions: {
+      style: google.maps.MapTypeControlStyle.DEFAULT,
+      mapTypeIds: [
+        google.maps.MapTypeId.ROADMAP,
+        google.maps.MapTypeId.TERRAIN
+      ]
+    },
   };
 
   // This next line makes `map` a new Google Map JavaScript Object and attaches it to
   // <div id="map">, which is appended as part of an exercise late in the course.
   map = new google.maps.Map(document.querySelector('#map'), mapOptions);
 
+// Insert this overlay map type as the first overlay map type at
+  // position 0. Note that all overlay map types appear on top of
+  // their parent base map.
+  map.overlayMapTypes.insertAt(
+      0, new CoordMapType(new google.maps.Size(256, 256)));
 
   /*
   locationFinder() returns an array of every location string from the JSONs
@@ -176,6 +207,7 @@ function initializeMap() {
       // your code goes here!
       infoWindow.setContent(name);
       infoWindow.open(map, this);
+
 
     });
 
