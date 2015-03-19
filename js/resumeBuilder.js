@@ -153,6 +153,7 @@ var bio = {
 				var formattedSkills = HTMLskills.replace("%data%",bio.skills[skill]);
 				$("#skills").append(formattedSkills);
 			}
+		$("#footerContacts").append(bioContacts);
 		}
 	}
 };
