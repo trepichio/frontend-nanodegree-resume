@@ -47,7 +47,7 @@ var work = {
     ]
 };
 
-	var projects = {
+var projects = {
     "project": [
         {
             "title": "front-end resume",
@@ -190,3 +190,18 @@ function displayWork(){
 }
 
 displayWork();
+
+
+function inName(){
+	var finalName = bio.name;
+    // Your code goes here!
+    var fn = finalName.toLowerCase().split(' ');
+
+    finalName = fn[0].charAt(0).toUpperCase() + fn[0].slice(1) + ' ' + fn[fn.length-1].toUpperCase();
+
+
+    // Don't delete this line!
+    return finalName;
+}
+
+$("#main").append(internationalizeButton);
